@@ -24,6 +24,7 @@ Thanks for supporting Django Cameroon and Hacktoberfest 2025! This project keeps
 
 ## Making Changes
 
+- Leave a star ⭐ to the repository
 - Create a feature branch: `git checkout -b feature/your-idea`.
 - Keep commits focused; small changes are easier to review.
 - Update or add tests when behaviour changes.
