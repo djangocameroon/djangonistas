@@ -1,0 +1,36 @@
+{% extends "hub/base.html" %}
+
+{% block title %}{{ school.name }} · Schools · Djangonista{% endblock %}
+
+{% block content %}
+<a class="mb-6 inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white" href="{% url 'hub:schools' %}">
+  ← Back to schools
+</a>
+
+<article class="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
+  <header class="space-y-2">
+    <h1 class="text-3xl font-bold text-white">{{ school.name }}</h1>
+    {% if school.city %}
+    <p class="text-sm text-slate-300">{{ school.city }}</p>
+    {% endif %}
+  </header>
+
+  {% if school.programs %}
+  <section>
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-300">Programs</h2>
+    <ul class="mt-3 flex flex-wrap gap-2 text-xs">
+      {% for program in school.programs %}
+      <li class="rounded-full bg-teal-500/20 px-3 py-1 text-teal-100">{{ program }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if school.contact %}
+  <section>
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-300">Contact</h2>
+    <p class="mt-2 text-slate-200">{{ school.contact }}</p>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

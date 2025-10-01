@@ -1,0 +1,20 @@
+[
+  {
+    "name": "National Advanced School of Engineering",
+    "city": "Yaoundé",
+    "programs": ["Software Engineering", "Electrical Engineering"],
+    "contact": "partnerships@nase.cm"
+  },
+  {
+    "name": "ICT University Cameroon",
+    "city": "Yaoundé",
+    "programs": ["Computer Science", "Cybersecurity", "Data Science"],
+    "contact": "collab@ictuniversity.edu"
+  },
+  {
+    "name": "University of Buea",
+    "city": "Buea",
+    "programs": ["Computer Engineering", "Informatics"],
+    "contact": "innovation@ubuea.cm"
+  }
+]

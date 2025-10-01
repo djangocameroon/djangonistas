@@ -1,0 +1,44 @@
+{% extends "hub/base.html" %}
+
+{% block title %}Djangonista · Schools{% endblock %}
+
+{% block content %}
+<header class="mb-10 space-y-4">
+  <h1 class="text-3xl font-bold text-teal-200">Schools & Innovation Hubs</h1>
+  <p class="text-slate-300">
+    Spotlight universities and hubs where we can nurture the next wave of Django makers.
+  </p>
+</header>
+
+<div class="grid gap-6 md:grid-cols-3">
+  {% for school in schools %}
+  <article class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+    <h2 class="text-xl font-semibold text-white">
+      <a class="hover:underline" href="{{ school.get_absolute_url }}">{{ school.name }}</a>
+    </h2>
+    {% if school.city %}
+    <p class="text-sm text-slate-300">{{ school.city }}</p>
+    {% endif %}
+    {% if school.programs %}
+    <div class="mt-3">
+      <h3 class="text-sm font-semibold text-slate-200">Programs</h3>
+      <ul class="mt-2 flex flex-wrap gap-2 text-xs">
+        {% for program in school.programs %}
+        <li class="rounded-full bg-teal-500/20 px-3 py-1 text-teal-100">{{ program }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% if school.contact %}
+    <p class="mt-4 text-sm text-slate-300">Contact: {{ school.contact }}</p>
+    {% endif %}
+  </article>
+  {% empty %}
+  <p class="col-span-full rounded-3xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-slate-300">
+    List campuses in <code>data/schools.json</code> and run <code>uv run python manage.py seed_schools</code>.
+  </p>
+  {% endfor %}
+</div>
+
+{% include "hub/includes/pagination.html" %}
+{% endblock %}

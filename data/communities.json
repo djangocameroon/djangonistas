@@ -1,0 +1,32 @@
+[
+  {
+    "name": "PyLadies Douala",
+    "focus": "Empowering women in Python and open source",
+    "location": "Douala, Cameroon",
+    "contact": "hello@pyladiesdouala.org",
+    "links": {
+      "website": "https://pyladies.com/locations/douala",
+      "twitter": "https://x.com/pyladies_dla"
+    }
+  },
+  {
+    "name": "GDG Yaoundé",
+    "focus": "Google developer ecosystem meetups and workshops",
+    "location": "Yaoundé, Cameroon",
+    "contact": "organizers@gdgyaounde.org",
+    "links": {
+      "website": "https://gdg.community.dev/gdg-yaounde/",
+      "twitter": "https://x.com/gdgyaounde"
+    }
+  },
+  {
+    "name": "Cameroon OSS Network",
+    "focus": "Connecting open source contributors across Cameroon",
+    "location": "Remote / Nationwide",
+    "contact": "contact@cmoss.org",
+    "links": {
+      "website": "https://cmoss.org",
+      "twitter": "https://x.com/cameroonoss"
+    }
+  }
+]

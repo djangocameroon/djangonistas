@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Yokwe Juste",
+    "role": "Community Lead",
+    "interests": ["Django", "Community Building", "DevRel"],
+    "availability": "Mentorship, Speaking"
+  },
+  {
+    "name": "Nadia Fofou",
+    "role": "Full-Stack Developer",
+    "interests": ["Django", "Tailwind CSS", "Open Source"],
+    "availability": "Code Reviews, Pair Programming"
+  },
+  {
+    "name": "Mbollo Serge",
+    "role": "Data Scientist",
+    "interests": ["ML", "Data Engineering", "Civic Tech"],
+    "availability": "Workshops, Talks"
+  }
+]

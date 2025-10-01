@@ -1,0 +1,53 @@
+{% extends "hub/base.html" %}
+
+{% block title %}Djangonista · Communities{% endblock %}
+
+{% block content %}
+<header class="mb-10 space-y-4">
+  <h1 class="text-3xl font-bold text-purple-200">Communities to Partner With</h1>
+  <p class="text-slate-300">
+    Discover local tech circles ready to co-host events or co-create open source wins.
+  </p>
+</header>
+
+<div class="grid gap-6 md:grid-cols-3">
+  {% for community in communities %}
+  <article class="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+    <div>
+      <h2 class="text-xl font-semibold text-white">
+        <a class="hover:underline" href="{{ community.get_absolute_url }}">{{ community.name }}</a>
+      </h2>
+      {% if community.location %}
+      <p class="text-sm text-slate-300">{{ community.location }}</p>
+      {% endif %}
+    </div>
+    {% if community.focus %}
+    <p class="text-sm text-slate-200">{{ community.focus }}</p>
+    {% endif %}
+    <div class="mt-auto space-y-2 text-sm text-slate-300">
+      {% if community.contact %}
+      <p class="font-semibold text-slate-100">Contact: {{ community.contact }}</p>
+      {% endif %}
+      <div class="flex flex-wrap gap-3 text-xs">
+        {% if community.links.website %}
+        <a class="rounded-full bg-purple-500/20 px-3 py-1 text-purple-100" href="{{ community.links.website }}" target="_blank" rel="noreferrer">
+          Website
+        </a>
+        {% endif %}
+        {% if community.links.twitter %}
+        <a class="rounded-full bg-purple-500/20 px-3 py-1 text-purple-100" href="{{ community.links.twitter }}" target="_blank" rel="noreferrer">
+          Twitter
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+  {% empty %}
+  <p class="col-span-full rounded-3xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-slate-300">
+    Add partner groups to <code>data/communities.json</code> and run <code>uv run python manage.py seed_communities</code>.
+  </p>
+  {% endfor %}
+</div>
+
+{% include "hub/includes/pagination.html" %}
+{% endblock %}

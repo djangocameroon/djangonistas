@@ -1,0 +1,44 @@
+{% extends "hub/base.html" %}
+
+{% block title %}Djangonista · People{% endblock %}
+
+{% block content %}
+<header class="mb-10 space-y-4">
+  <h1 class="text-3xl font-bold text-sky-200">Featured People</h1>
+  <p class="text-slate-300">
+    Connect with mentors, speakers, and collaborators ready to support your Hacktoberfest journey.
+  </p>
+</header>
+
+<div class="grid gap-6 md:grid-cols-3">
+  {% for person in people %}
+  <article class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+    <h2 class="text-xl font-semibold text-white">
+      <a class="hover:underline" href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+    </h2>
+    <p class="text-sm uppercase tracking-wide text-slate-300">{{ person.role }}</p>
+    {% if person.interests %}
+    <div class="mt-4">
+      <h3 class="text-sm font-semibold text-slate-200">Interests</h3>
+      <ul class="mt-2 flex flex-wrap gap-2 text-xs">
+        {% for tag in person.interests %}
+        <li class="rounded-full bg-sky-500/20 px-3 py-1 text-sky-200">{{ tag }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% if person.availability %}
+    <p class="mt-4 text-sm text-slate-300">
+      Available for <span class="font-semibold text-slate-100">{{ person.availability }}</span>
+    </p>
+    {% endif %}
+  </article>
+  {% empty %}
+  <p class="col-span-full rounded-3xl border border-dashed border-white/20 bg-white/5 p-6 text-center text-slate-300">
+    Add contributors to <code>data/people.json</code> and run <code>uv run python manage.py seed_people</code>.
+  </p>
+  {% endfor %}
+</div>
+
+{% include "hub/includes/pagination.html" %}
+{% endblock %}

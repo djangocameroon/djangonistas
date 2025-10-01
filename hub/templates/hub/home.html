@@ -1,0 +1,46 @@
+{% extends "hub/base.html" %}
+
+{% block title %}Djangonista · Home{% endblock %}
+
+{% block content %}
+<section class="space-y-8 text-center">
+  <span class="inline-block rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-slate-200">
+    Hacktoberfest 2025 · Django Cameroon
+  </span>
+  <h1 class="text-4xl font-black leading-tight md:text-5xl">
+    Build open source impact with <span class="text-sky-200">Djangonista</span>
+  </h1>
+  <p class="mx-auto max-w-2xl text-lg text-slate-300 md:text-xl">
+    A Django + Tailwind starter that highlights community members, partner groups, and schools fueling the ecosystem in Cameroon.
+  </p>
+  <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+    <a
+      href="{% url 'hub:people' %}"
+      class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-slate-100 shadow-lg shadow-black/30 transition hover:translate-y-0.5 hover:bg-slate-800"
+    >
+      Meet Contributors
+    </a>
+    <a
+      href="{% url 'hub:communities' %}"
+      class="inline-flex items-center gap-2 rounded-full bg-white/15 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-white/25"
+    >
+      Explore Communities
+    </a>
+  </div>
+</section>
+
+<section class="mt-16 grid gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur md:grid-cols-3">
+  <div class="space-y-2">
+    <p class="text-5xl font-black text-sky-200">{{ people_count }}</p>
+    <p class="text-sm uppercase tracking-wide text-slate-300">People</p>
+  </div>
+  <div class="space-y-2">
+    <p class="text-5xl font-black text-purple-200">{{ community_count }}</p>
+    <p class="text-sm uppercase tracking-wide text-slate-300">Communities</p>
+  </div>
+  <div class="space-y-2">
+    <p class="text-5xl font-black text-teal-200">{{ school_count }}</p>
+    <p class="text-sm uppercase tracking-wide text-slate-300">Schools</p>
+  </div>
+</section>
+{% endblock %}

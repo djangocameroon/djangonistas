@@ -1,0 +1,45 @@
+{% extends "hub/base.html" %}
+
+{% block title %}{{ community.name }} · Communities · Djangonista{% endblock %}
+
+{% block content %}
+<a class="mb-6 inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white" href="{% url 'hub:communities' %}">
+  ← Back to communities
+</a>
+
+<article class="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
+  <header class="space-y-2">
+    <h1 class="text-3xl font-bold text-white">{{ community.name }}</h1>
+    {% if community.location %}
+    <p class="text-sm text-slate-300">{{ community.location }}</p>
+    {% endif %}
+  </header>
+
+  {% if community.focus %}
+  <section class="space-y-2">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-300">Focus</h2>
+    <p class="text-slate-200">{{ community.focus }}</p>
+  </section>
+  {% endif %}
+
+  {% if community.contact %}
+  <section>
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-300">Contact</h2>
+    <p class="mt-2 text-slate-200">{{ community.contact }}</p>
+  </section>
+  {% endif %}
+
+  {% if link_items %}
+  <section class="space-y-3">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-300">Links</h2>
+    <div class="flex flex-wrap gap-3 text-xs">
+      {% for label, url in link_items %}
+      <a class="rounded-full bg-purple-500/20 px-3 py-1 text-purple-100" href="{{ url }}" target="_blank" rel="noreferrer">
+        {{ label }}
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

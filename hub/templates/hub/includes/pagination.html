@@ -1,0 +1,40 @@
+{% if page_obj.has_other_pages %}
+<nav class="mt-8 flex items-center justify-center gap-2 text-sm" aria-label="Pagination">
+  {% if page_obj.has_previous %}
+  <a
+    class="rounded-full bg-white/10 px-3 py-1 text-slate-200 hover:bg-white/20"
+    href="?page={{ page_obj.previous_page_number }}"
+  >
+    Previous
+  </a>
+  {% else %}
+  <span class="rounded-full bg-slate-800/60 px-3 py-1 text-slate-500">Previous</span>
+  {% endif %}
+
+  {% for num in page_obj.elided_page_range %}
+    {% if num == page_obj.paginator.ELLIPSIS %}
+    <span class="px-2 text-slate-500">…</span>
+    {% elif num == page_obj.number %}
+    <span class="rounded-full bg-sky-500/30 px-3 py-1 font-semibold text-sky-100">{{ num }}</span>
+    {% else %}
+    <a
+      class="rounded-full bg-white/10 px-3 py-1 text-slate-200 hover:bg-white/20"
+      href="?page={{ num }}"
+    >
+      {{ num }}
+    </a>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+  <a
+    class="rounded-full bg-white/10 px-3 py-1 text-slate-200 hover:bg-white/20"
+    href="?page={{ page_obj.next_page_number }}"
+  >
+    Next
+  </a>
+  {% else %}
+  <span class="rounded-full bg-slate-800/60 px-3 py-1 text-slate-500">Next</span>
+  {% endif %}
+</nav>
+{% endif %}

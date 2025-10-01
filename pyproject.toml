@@ -1,0 +1,9 @@
+[project]
+name = "djangonistas"
+version = "0.1.0"
+description = "Hacktoberfest 2025 community hub for Django Cameroon"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.2.6",
+]

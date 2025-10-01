@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Djangonista{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <div class="border-b border-white/10 bg-slate-950/80 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-4 md:flex-row md:items-center md:justify-between">
+        <a href="{% url 'hub:home' %}" class="text-xl font-bold tracking-tight text-sky-200">Djangonista</a>
+        <nav class="flex flex-wrap gap-3 text-sm font-semibold uppercase tracking-wide text-slate-300">
+          <a class="hover:text-white" href="{% url 'hub:people' %}">People</a>
+          <a class="hover:text-white" href="{% url 'hub:communities' %}">Communities</a>
+          <a class="hover:text-white" href="{% url 'hub:schools' %}">Schools</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="mx-auto w-full max-w-6xl px-6 py-14">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-white/10 bg-slate-950/90 py-6 text-sm text-slate-400">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 px-6 md:flex-row md:items-center md:justify-between">
+        <p>&copy; {% now "Y" %} Django Cameroon · Djangonista.</p>
+        <p>Join <a class="text-sky-300 hover:underline" href="https://hacktoberfest.com/">Hacktoberfest 2025</a>.</p>
+      </div>
+    </footer>
+  </body>
+</html>
