@@ -16,5 +16,11 @@
     "role": "Data Scientist",
     "interests": ["ML", "Data Engineering", "Civic Tech"],
     "availability": "Workshops, Talks"
+  },
+  {
+    "name":"Tomdieu Ivan",
+    "role":"Backend Developer",
+    "interests":["Django","APIs","Cloud"],
+    "availability":"Project Collaboration, Mentorship"
   }
 ]
