@@ -4,10 +4,10 @@ A lightweight Django + Tailwind (CDN) starter crafted for Hacktoberfest 2025 wit
 
 ## Highlights
 
-- 📦 Uses `uv` for blazing-fast dependency management.
-- 🎨 Tailwind CSS via CDN with sleek directory and detail pages.
-- 🗂️ JSON-powered data that seeds the database via focused management commands.
-- ⚙️ Ready-to-run Django admin and tests for quick local verification.
+- Uses `uv` for blazing-fast dependency management.
+- Tailwind CSS via CDN with sleek directory and detail pages.
+- JSON-powered data that seeds the database via focused management commands.
+- Ready-to-run Django admin and tests for quick local verification.
 
 ## Quick Start
 
