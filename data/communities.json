@@ -28,5 +28,15 @@
       "website": "https://cmoss.org",
       "twitter": "https://x.com/cameroonoss"
     }
+  },
+  {
+    "name":"Django Cameroon",
+    "focus":"Django web framework enthusiasts and developers",
+    "location":"Yaoundé, Cameroon",
+    "contact":"djangocameroon@gmail.com",
+    "links": {
+      "website": "http://djangocameroon.site",
+      "twitter": "https://x.com/DjangoCameroon"
+    }
   }
 ]

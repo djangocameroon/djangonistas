@@ -16,5 +16,11 @@
     "city": "Buea",
     "programs": ["Computer Engineering", "Informatics"],
     "contact": "innovation@ubuea.cm"
+  },
+  {
+    "name":"ICT University Cameroon",
+    "city":"Yaoundé",
+    "programs":["Computer Science","Cybersecurity","Data Science","Robotics"],
+    "contact":"admin@ictuniversity.edu.cm"
   }
 ]
