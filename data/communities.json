@@ -38,5 +38,15 @@
       "website": "http://djangocameroon.site",
       "twitter": "https://x.com/DjangoCameroon"
     }
+  },
+  {
+    "name": "Djangonaut Space",
+    "focus": "An 8-week group mentorship program that helps individuals become long-term contributors to the Django open-source project",
+    "location": "Everywhere, Online",
+    "contact": "contact@djangonaut.space",
+    "links": {
+      "website": "https://djangonaut.space/",
+      "twitter": "https://x.com/djangonautspace"
+    }
   }
 ]

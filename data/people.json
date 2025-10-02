@@ -22,5 +22,11 @@
     "role":"Backend Developer",
     "interests":["Django","APIs","Cloud"],
     "availability":"Project Collaboration, Mentorship"
+  },
+  {
+    "name": "Joel Fah",
+    "role": "Pixel twister",
+    "interests": ["Communities", "Design", "Growth"],
+    "availability": "Design Reviews, Mentorship, Yapping"
   }
 ]

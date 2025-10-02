@@ -22,5 +22,11 @@
     "city":"Yaoundé",
     "programs":["Computer Science","Cybersecurity","Data Science","Robotics"],
     "contact":"admin@ictuniversity.edu.cm"
+  },
+  {
+    "name":"University of Yaounde 1",
+    "city":"Yaounde",
+    "programs":["Computer Science","Information Technology","Software Engineering"],
+    "contact":"rectorat@uni-yaounde1.cm"
   }
 ]
