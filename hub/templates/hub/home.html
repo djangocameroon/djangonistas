@@ -4,11 +4,11 @@
 
 {% block content %}
 <section class="flex min-h-[calc(100vh-7rem)] w-full flex-col items-center justify-center space-y-8 px-6 text-center">
-  <span class="inline-block rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-slate-200">
+  <span class="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-200">
     Hacktoberfest 2025 · Django Cameroon
   </span>
-  <h1 class="text-4xl font-black leading-tight md:text-5xl">
-    Build open source impact with <span class="text-sky-200">Djangonista</span>
+  <h1 class="text-4xl font-black leading-tight md:text-6xl">
+    Build <span class="text-sky-200">open source</span> impact with <span class="text-sky-200">Djangonista</span>
   </h1>
   <p class="mx-auto max-w-2xl text-lg text-slate-300 md:text-xl">
     A Django + Tailwind starter that highlights community members, partner groups, and schools fueling the ecosystem in Cameroon.
@@ -16,7 +16,7 @@
   <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
     <a
       href="{% url 'hub:people' %}"
-      class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-slate-100 shadow-lg shadow-black/30 transition hover:translate-y-0.5 hover:bg-slate-800"
+      class="inline-flex items-center gap-2 rounded-full bg-sky-900 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-slate-100 shadow-lg shadow-black/30 transition hover:bg-sky-800"
     >
       Meet Contributors
     </a>
@@ -31,16 +31,78 @@
 
 <section class="mt-16 grid gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur md:grid-cols-3">
   <div class="space-y-2">
-    <p class="text-5xl font-black text-sky-200">{{ people_count }}</p>
+    <p class="odometer text-5xl font-black text-sky-200">{{ people_count }}</p>
     <p class="text-sm uppercase tracking-wide text-slate-300">People</p>
   </div>
   <div class="space-y-2">
-    <p class="text-5xl font-black text-purple-200">{{ community_count }}</p>
+    <p class="odometer text-5xl font-black text-purple-200">{{ community_count }}</p>
     <p class="text-sm uppercase tracking-wide text-slate-300">Communities</p>
   </div>
   <div class="space-y-2">
-    <p class="text-5xl font-black text-teal-200">{{ school_count }}</p>
+    <p class="odometer text-5xl font-black text-teal-200">{{ school_count }}</p>
     <p class="text-sm uppercase tracking-wide text-slate-300">Schools</p>
   </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      let animationTriggered = false; // Prevent multiple animations
+      
+      // Initialize odometers with different animation durations
+      const peopleOdometer = new Odometer({
+          el: document.querySelector('.odometer'),
+          value: 0,
+          format: '(,ddd)',
+          duration: 2000 // 2 seconds
+      });
+      
+      const communityOdometer = new Odometer({
+          el: document.querySelectorAll('.odometer')[1],
+          value: 0,
+          format: '(,ddd)',
+          duration: 1500 // 1.5 seconds
+      });
+      
+      const schoolOdometer = new Odometer({
+          el: document.querySelectorAll('.odometer')[2],
+          value: 0,
+          format: '(,ddd)',
+          duration: 3000 // 3 seconds
+      });
+      
+      // Function to animate counters
+      function animateCounters() {
+          if (animationTriggered) return;
+          animationTriggered = true;
+          
+          // Animate with staggered start times for wave effect
+          setTimeout(() => {
+              peopleOdometer.update({{ people_count }});
+          }, 200); // Start first
+          
+          setTimeout(() => {
+              communityOdometer.update({{ community_count }});
+          }, 500); // Start 300ms later
+          
+          setTimeout(() => {
+              schoolOdometer.update({{ school_count }});
+          }, 800); // Start 600ms after first
+      }
+      
+      // Observer to detect when section is in view
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  animateCounters();
+              }
+          });
+      }, {
+          threshold: 0.3 // Trigger when 30% of section is visible
+      });
+      
+      // Start observing the stats section
+      const statsSection = document.querySelector('section:last-of-type');
+      observer.observe(statsSection);
+  });
+</script>
 </section>
 {% endblock %}
