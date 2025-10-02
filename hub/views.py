@@ -2,6 +2,7 @@
 
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Q
 
 from .models import Community, Person, School
 
@@ -28,10 +29,82 @@ def _paginate(request, queryset):
     return page
 
 
+def _filter_people(queryset, request):
+    """Apply search and filter logic to people queryset."""
+    search_query = request.GET.get('search', '').strip()
+    role_filter = request.GET.get('role', '').strip()
+    location_filter = request.GET.get('location', '').strip()
+    
+    if search_query:
+        queryset = queryset.filter(
+            Q(name__icontains=search_query) |
+            Q(bio__icontains=search_query) |
+            Q(interests__icontains=search_query) |
+            Q(availability__icontains=search_query)
+        )
+    
+    if role_filter:
+        queryset = queryset.filter(role__icontains=role_filter)
+    
+    return queryset
+
+
+def _filter_communities(queryset, request):
+    """Apply search and filter logic to communities queryset."""
+    search_query = request.GET.get('search', '').strip()
+    location_filter = request.GET.get('location', '').strip()
+    focus_filter = request.GET.get('focus', '').strip()
+    
+    if search_query:
+        queryset = queryset.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(focus__icontains=search_query)
+        )
+    
+    if location_filter:
+        queryset = queryset.filter(location__icontains=location_filter)
+    
+    if focus_filter:
+        queryset = queryset.filter(focus__icontains=focus_filter)
+    
+    return queryset
+
+
+def _filter_schools(queryset, request):
+    """Apply search and filter logic to schools queryset."""
+    search_query = request.GET.get('search', '').strip()
+    city_filter = request.GET.get('city', '').strip()
+    
+    if search_query:
+        queryset = queryset.filter(
+            Q(name__icontains=search_query) |
+            Q(programs__icontains=search_query)
+        )
+    
+    if city_filter:
+        queryset = queryset.filter(city__icontains=city_filter)
+    
+    return queryset
+
+
 def people_list(request):
     """Directory of contributors and mentors."""
-    page_obj = _paginate(request, Person.objects.all())
-    return render(request, "hub/people.html", {"page_obj": page_obj, "people": page_obj})
+    queryset = Person.objects.all()
+    queryset = _filter_people(queryset, request)
+    
+    # Get filter options for dropdowns
+    roles = Person.objects.values_list('role', flat=True).distinct().exclude(role='')
+    
+    page_obj = _paginate(request, queryset)
+    context = {
+        "page_obj": page_obj, 
+        "people": page_obj,
+        "roles": sorted(roles),
+        "current_search": request.GET.get('search', ''),
+        "current_role": request.GET.get('role', ''),
+    }
+    return render(request, "hub/people.html", context)
 
 
 def people_detail(request, slug):
@@ -42,8 +115,21 @@ def people_detail(request, slug):
 
 def community_list(request):
     """Directory of communities that collaborate with Django Cameroon."""
-    page_obj = _paginate(request, Community.objects.all())
-    return render(request, "hub/communities.html", {"page_obj": page_obj, "communities": page_obj})
+    queryset = Community.objects.all()
+    queryset = _filter_communities(queryset, request)
+    
+    # Get filter options for dropdowns
+    locations = Community.objects.values_list('location', flat=True).distinct().exclude(location='')
+    
+    page_obj = _paginate(request, queryset)
+    context = {
+        "page_obj": page_obj, 
+        "communities": page_obj,
+        "locations": sorted(locations),
+        "current_search": request.GET.get('search', ''),
+        "current_location": request.GET.get('location', ''),
+    }
+    return render(request, "hub/communities.html", context)
 
 
 def community_detail(request, slug):
@@ -64,8 +150,21 @@ def community_detail(request, slug):
 
 def school_list(request):
     """Directory of schools and innovation hubs."""
-    page_obj = _paginate(request, School.objects.all())
-    return render(request, "hub/schools.html", {"page_obj": page_obj, "schools": page_obj})
+    queryset = School.objects.all()
+    queryset = _filter_schools(queryset, request)
+    
+    # Get filter options for dropdowns
+    cities = School.objects.values_list('city', flat=True).distinct().exclude(city='')
+    
+    page_obj = _paginate(request, queryset)
+    context = {
+        "page_obj": page_obj, 
+        "schools": page_obj,
+        "cities": sorted(cities),
+        "current_search": request.GET.get('search', ''),
+        "current_city": request.GET.get('city', ''),
+    }
+    return render(request, "hub/schools.html", context)
 
 
 def school_detail(request, slug):

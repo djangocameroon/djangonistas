@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Djangonista{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom dropdown styling for dark theme */
+      select {
+        background-color: rgb(30 41 59) !important; /* slate-800 */
+        color: white !important;
+      }
+      select option {
+        background-color: rgb(30 41 59) !important; /* slate-800 */
+        color: white !important;
+      }
+      select:focus option {
+        background-color: rgb(30 41 59) !important;
+        color: white !important;
+      }
+    </style>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100">
     <div class="border-b border-white/10 bg-slate-950/80 backdrop-blur">
@@ -28,5 +43,35 @@
         <p>Join <a class="text-sky-300 hover:underline" href="https://hacktoberfest.com/">Hacktoberfest 2025</a>.</p>
       </div>
     </footer>
+
+    <script>
+      // Live search functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchForms = document.querySelectorAll('form[data-live-search]');
+        
+        searchForms.forEach(form => {
+          const searchInput = form.querySelector('input[name="search"]');
+          const selectInputs = form.querySelectorAll('select');
+          let searchTimeout;
+          
+          function performSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+              form.submit();
+            }, 500); // Debounce search by 500ms
+          }
+          
+          if (searchInput) {
+            searchInput.addEventListener('input', performSearch);
+          }
+          
+          selectInputs.forEach(select => {
+            select.addEventListener('change', () => {
+              form.submit();
+            });
+          });
+        });
+      });
+    </script>
   </body>
 </html>

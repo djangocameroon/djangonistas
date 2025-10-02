@@ -8,12 +8,42 @@
 </a>
 
 <article class="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
-  <header class="space-y-2">
-    <h1 class="text-3xl font-bold text-white">{{ community.name }}</h1>
-    {% if community.location %}
-    <p class="text-sm text-slate-300">{{ community.location }}</p>
+  <header class="flex items-start gap-6">
+    {% if community.logo_url %}
+    <img 
+      src="{{ community.logo_url }}" 
+      alt="{{ community.name }}" 
+      class="h-24 w-24 rounded-lg border-2 border-white/20 object-cover"
+    >
+    {% else %}
+    <div class="flex h-24 w-24 items-center justify-center rounded-lg bg-purple-500/20 text-2xl font-bold text-purple-200">
+      {{ community.name|first|upper }}
+    </div>
     {% endif %}
+    <div class="flex-1 space-y-2">
+      <h1 class="text-3xl font-bold text-white">{{ community.name }}</h1>
+      {% if community.location %}
+      <p class="text-sm text-slate-300">📍 {{ community.location }}</p>
+      {% endif %}
+      {% if community.founded_year or community.member_count %}
+      <div class="flex gap-4 text-sm text-slate-400">
+        {% if community.founded_year %}
+        <span>Founded {{ community.founded_year }}</span>
+        {% endif %}
+        {% if community.member_count %}
+        <span>{{ community.member_count }} members</span>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
   </header>
+
+  {% if community.description %}
+  <section class="space-y-2">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-300">About</h2>
+    <p class="text-slate-200">{{ community.description }}</p>
+  </section>
+  {% endif %}
 
   {% if community.focus %}
   <section class="space-y-2">

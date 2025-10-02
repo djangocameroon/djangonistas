@@ -44,6 +44,12 @@ class Command(BaseCommand):
                 "role": entry.get("role", ""),
                 "interests": entry.get("interests", []),
                 "availability": entry.get("availability", ""),
+                "avatar_url": entry.get("avatar_url", ""),
+                "bio": entry.get("bio", ""),
+                "github_url": entry.get("github_url", ""),
+                "twitter_url": entry.get("twitter_url", ""),
+                "linkedin_url": entry.get("linkedin_url", ""),
+                "website_url": entry.get("website_url", ""),
             }
             _, created = Person.objects.update_or_create(name=name, defaults=defaults)
             if created:

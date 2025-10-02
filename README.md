@@ -29,7 +29,7 @@ Visit `http://127.0.0.1:8000/` for the landing page, `/people/`, `/communities/`
 
 ## Project Layout
 
-```
+```text
 .
 ├── data/                 # JSON data consumed by the landing page
 ├── djangonista/          # Django project configuration

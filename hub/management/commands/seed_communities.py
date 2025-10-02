@@ -45,6 +45,10 @@ class Command(BaseCommand):
                 "location": entry.get("location", ""),
                 "contact": entry.get("contact", ""),
                 "links": entry.get("links", {}),
+                "logo_url": entry.get("logo_url", ""),
+                "description": entry.get("description", ""),
+                "founded_year": entry.get("founded_year"),
+                "member_count": entry.get("member_count"),
             }
             _, created = Community.objects.update_or_create(name=name, defaults=defaults)
             if created:

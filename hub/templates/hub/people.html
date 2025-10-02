@@ -10,13 +10,90 @@
   </p>
 </header>
 
+<!-- Search and Filter Section -->
+<div class="mb-8 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+  <form method="get" data-live-search class="space-y-4">
+    <div class="grid gap-4 md:grid-cols-3">
+      <!-- Search Input -->
+      <div>
+        <label for="search" class="block text-sm font-medium text-slate-300 mb-2">Search</label>
+        <input 
+          type="text" 
+          id="search" 
+          name="search" 
+          value="{{ current_search }}"
+          placeholder="Search by name, bio, interests..." 
+          class="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-white placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+        >
+      </div>
+      
+      <!-- Role Filter -->
+      <div>
+        <label for="role" class="block text-sm font-medium text-slate-300 mb-2">Role</label>
+        <select 
+          id="role" 
+          name="role" 
+          class="w-full rounded-lg border border-white/20 bg-slate-800 px-4 py-2 text-white focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+        >
+          <option value="" class="bg-slate-800 text-white">All Roles</option>
+          {% for role in roles %}
+          <option value="{{ role }}" {% if role == current_role %}selected{% endif %} class="bg-slate-800 text-white">{{ role }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <!-- Search Button -->
+      <div class="flex items-end">
+        <button 
+          type="submit" 
+          class="w-full rounded-lg bg-sky-500 px-4 py-2 font-semibold text-white hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+    
+    {% if current_search or current_role %}
+    <div class="flex items-center justify-between border-t border-white/10 pt-4">
+      <p class="text-sm text-slate-400">
+        Found {{ page_obj.paginator.count }} result{{ page_obj.paginator.count|pluralize }}
+      </p>
+      <a 
+        href="{% url 'hub:people' %}" 
+        class="text-sm text-sky-300 hover:text-sky-200"
+      >
+        Clear filters
+      </a>
+    </div>
+    {% endif %}
+  </form>
+</div>
+
 <div class="grid gap-6 md:grid-cols-3">
   {% for person in people %}
   <article class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-    <h2 class="text-xl font-semibold text-white">
-      <a class="hover:underline" href="{{ person.get_absolute_url }}">{{ person.name }}</a>
-    </h2>
-    <p class="text-sm uppercase tracking-wide text-slate-300">{{ person.role }}</p>
+    <div class="flex items-start gap-4">
+      {% if person.avatar_url %}
+      <img 
+        src="{{ person.avatar_url }}" 
+        alt="{{ person.name }}" 
+        class="h-16 w-16 rounded-full border-2 border-white/20 object-cover"
+      >
+      {% else %}
+      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-sky-500/20 text-lg font-bold text-sky-200">
+        {{ person.name|first|upper }}
+      </div>
+      {% endif %}
+      <div class="flex-1">
+        <h2 class="text-xl font-semibold text-white">
+          <a class="hover:underline" href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+        </h2>
+        <p class="text-sm uppercase tracking-wide text-slate-300">{{ person.role }}</p>
+        {% if person.bio %}
+        <p class="mt-2 text-sm text-slate-400 line-clamp-2">{{ person.bio|truncatewords:15 }}</p>
+        {% endif %}
+      </div>
+    </div>
     {% if person.interests %}
     <div class="mt-4">
       <h3 class="text-sm font-semibold text-slate-200">Interests</h3>

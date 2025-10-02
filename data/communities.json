@@ -7,7 +7,11 @@
     "links": {
       "website": "https://pyladies.com/locations/douala",
       "twitter": "https://x.com/pyladies_dla"
-    }
+    },
+    "logo_url": "https://images.unsplash.com/photo-1573164713712-03790a178651?w=150&h=150&fit=crop",
+    "description": "PyLadies Douala is a local chapter of the global PyLadies organization, dedicated to helping more women become active participants and leaders in the Python open-source community. We provide a friendly support network for women and marginalized genders, organize workshops, and create opportunities for skill development.",
+    "founded_year": 2019,
+    "member_count": 150
   },
   {
     "name": "GDG Yaoundé",
@@ -17,7 +21,11 @@
     "links": {
       "website": "https://gdg.community.dev/gdg-yaounde/",
       "twitter": "https://x.com/gdgyaounde"
-    }
+    },
+    "logo_url": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=150&h=150&fit=crop",
+    "description": "Google Developer Group Yaoundé brings together developers interested in Google technologies. We host regular meetups, workshops, and conferences covering Android, Web, Cloud, and other Google developer tools and platforms.",
+    "founded_year": 2015,
+    "member_count": 300
   },
   {
     "name": "Cameroon OSS Network",
@@ -27,16 +35,24 @@
     "links": {
       "website": "https://cmoss.org",
       "twitter": "https://x.com/cameroonoss"
-    }
+    },
+    "logo_url": "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=150&h=150&fit=crop&crop=center",
+    "description": "The Cameroon Open Source Software Network is a community-driven initiative that connects developers, contributors, and advocates of open source software across Cameroon. We promote collaboration, knowledge sharing, and the adoption of open source technologies.",
+    "founded_year": 2020,
+    "member_count": 200
   },
   {
-    "name":"Django Cameroon",
-    "focus":"Django web framework enthusiasts and developers",
-    "location":"Yaoundé, Cameroon",
-    "contact":"djangocameroon@gmail.com",
+    "name": "Django Cameroon",
+    "focus": "Django web framework enthusiasts and developers",
+    "location": "Yaoundé, Cameroon",
+    "contact": "djangocameroon@gmail.com",
     "links": {
       "website": "http://djangocameroon.site",
       "twitter": "https://x.com/DjangoCameroon"
-    }
+    },
+    "logo_url": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=150&h=150&fit=crop",
+    "description": "Django Cameroon is the official Django community in Cameroon, bringing together web developers passionate about the Django framework. We organize workshops, hackathons, and contribute to open source projects while building amazing web applications.",
+    "founded_year": 2018,
+    "member_count": 180
   }
 ]
