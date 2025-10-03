@@ -10,16 +10,91 @@
   </p>
 </header>
 
+<!-- Search and Filter Section -->
+<div class="mb-8 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+  <form method="get" data-live-search class="space-y-4">
+    <div class="grid gap-4 md:grid-cols-3">
+      <!-- Search Input -->
+      <div>
+        <label for="search" class="block text-sm font-medium text-slate-300 mb-2">Search</label>
+        <input 
+          type="text" 
+          id="search" 
+          name="search" 
+          value="{{ current_search }}"
+          placeholder="Search communities by name, focus..." 
+          class="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-white placeholder-slate-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+        >
+      </div>
+      
+      <!-- Location Filter -->
+      <div>
+        <label for="location" class="block text-sm font-medium text-slate-300 mb-2">Location</label>
+        <select 
+          id="location" 
+          name="location" 
+          class="w-full rounded-lg border border-white/20 bg-slate-800 px-4 py-2 text-white focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+        >
+          <option value="" class="bg-slate-800 text-white">All Locations</option>
+          {% for location in locations %}
+          <option value="{{ location }}" {% if location == current_location %}selected{% endif %} class="bg-slate-800 text-white">{{ location }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <!-- Search Button -->
+      <div class="flex items-end">
+        <button 
+          type="submit" 
+          class="w-full rounded-lg bg-purple-500 px-4 py-2 font-semibold text-white hover:bg-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+    
+    {% if current_search or current_location %}
+    <div class="flex items-center justify-between border-t border-white/10 pt-4">
+      <p class="text-sm text-slate-400">
+        Found {{ page_obj.paginator.count }} result{{ page_obj.paginator.count|pluralize }}
+      </p>
+      <a 
+        href="{% url 'hub:communities' %}" 
+        class="text-sm text-purple-300 hover:text-purple-200"
+      >
+        Clear filters
+      </a>
+    </div>
+    {% endif %}
+  </form>
+</div>
+
 <div class="grid gap-6 md:grid-cols-3">
   {% for community in communities %}
   <article class="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-    <div>
-      <h2 class="text-xl font-semibold text-white">
-        <a class="hover:underline" href="{{ community.get_absolute_url }}">{{ community.name }}</a>
-      </h2>
-      {% if community.location %}
-      <p class="text-sm text-slate-300">{{ community.location }}</p>
+    <div class="flex items-start gap-4">
+      {% if community.logo_url %}
+      <img 
+        src="{{ community.logo_url }}" 
+        alt="{{ community.name }}" 
+        class="h-16 w-16 rounded-lg border-2 border-white/20 object-cover"
+      >
+      {% else %}
+      <div class="flex h-16 w-16 items-center justify-center rounded-lg bg-purple-500/20 text-lg font-bold text-purple-200">
+        {{ community.name|first|upper }}
+      </div>
       {% endif %}
+      <div class="flex-1">
+        <h2 class="text-xl font-semibold text-white">
+          <a class="hover:underline" href="{{ community.get_absolute_url }}">{{ community.name }}</a>
+        </h2>
+        {% if community.location %}
+        <p class="text-sm text-slate-300">📍 {{ community.location }}</p>
+        {% endif %}
+        {% if community.member_count %}
+        <p class="text-xs text-slate-400">{{ community.member_count }} members</p>
+        {% endif %}
+      </div>
     </div>
     {% if community.focus %}
     <p class="text-sm text-slate-200">{{ community.focus }}</p>

@@ -6,7 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Djangonista{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/odometer@0.4.8/themes/odometer-theme-default.min.css">
+    <style>
+      /* Custom dropdown styling for dark theme */
+      select {
+        background-color: rgb(30 41 59) !important; /* slate-800 */
+        color: white !important;
+      }
+      select option {
+        background-color: rgb(30 41 59) !important; /* slate-800 */
+        color: white !important;
+      }
+      select:focus option {
+        background-color: rgb(30 41 59) !important;
+        color: white !important;
+      }
+    </style>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100">
     <div class="border-b border-white/10 bg-slate-950/80 backdrop-blur">
@@ -61,7 +75,35 @@
       </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/odometer@0.4.8/odometer.min.js"></script>
+    <script>
+      // Live search functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchForms = document.querySelectorAll('form[data-live-search]');
+        
+        searchForms.forEach(form => {
+          const searchInput = form.querySelector('input[name="search"]');
+          const selectInputs = form.querySelectorAll('select');
+          let searchTimeout;
+          
+          function performSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+              form.submit();
+            }, 500); // Debounce search by 500ms
+          }
+          
+          if (searchInput) {
+            searchInput.addEventListener('input', performSearch);
+          }
+          
+          selectInputs.forEach(select => {
+            select.addEventListener('change', () => {
+              form.submit();
+            });
+          });
+        });
+      });
+    </script>
   </body>
 </html>
 {% endwith %}

@@ -44,6 +44,14 @@ class Person(SluggedModel):
     role = models.CharField(max_length=120)
     interests = models.JSONField(default=list, blank=True)
     availability = models.CharField(max_length=200, blank=True)
+    avatar_url = models.URLField(blank=True, help_text="Link to profile photo/avatar")
+    bio = models.TextField(blank=True, help_text="Short bio or description")
+    
+    # Social media links
+    github_url = models.URLField(blank=True, help_text="GitHub profile URL")
+    twitter_url = models.URLField(blank=True, help_text="Twitter/X profile URL")
+    linkedin_url = models.URLField(blank=True, help_text="LinkedIn profile URL")
+    website_url = models.URLField(blank=True, help_text="Personal website URL")
 
     def get_absolute_url(self) -> str:
         return reverse("hub:person-detail", kwargs={"slug": self.slug})
@@ -54,6 +62,10 @@ class Community(SluggedModel):
     location = models.CharField(max_length=120, blank=True)
     contact = models.CharField(max_length=150, blank=True)
     links = models.JSONField(default=dict, blank=True)
+    logo_url = models.URLField(blank=True, help_text="Link to community logo/image")
+    description = models.TextField(blank=True, help_text="Detailed community description")
+    founded_year = models.IntegerField(blank=True, null=True, help_text="Year the community was founded")
+    member_count = models.IntegerField(blank=True, null=True, help_text="Approximate number of members")
 
     def get_absolute_url(self) -> str:
         return reverse("hub:community-detail", kwargs={"slug": self.slug})

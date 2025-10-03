@@ -3,30 +3,47 @@
     "name": "Yokwe Juste",
     "role": "Community Lead",
     "interests": ["Django", "Community Building", "DevRel"],
-    "availability": "Mentorship, Speaking"
+    "availability": "Mentorship, Speaking",
+    "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    "bio": "Passionate community builder and Django advocate, leading the Django Cameroon community with focus on inclusive tech education.",
+    "github_url": "https://github.com/yokwe-juste",
+    "twitter_url": "https://twitter.com/yokwe_juste",
+    "linkedin_url": "https://linkedin.com/in/yokwe-juste",
+    "website_url": "https://yokwejuste.dev"
   },
   {
     "name": "Nadia Fofou",
     "role": "Full-Stack Developer",
     "interests": ["Django", "Tailwind CSS", "Open Source"],
-    "availability": "Code Reviews, Pair Programming"
+    "availability": "Code Reviews, Pair Programming",
+    "avatar_url": "https://images.unsplash.com/photo-1494790108755-2616b612b787?w=150&h=150&fit=crop&crop=face",
+    "bio": "Full-stack developer with expertise in modern web technologies, passionate about creating beautiful and functional user interfaces.",
+    "github_url": "https://github.com/nadia-fofou",
+    "linkedin_url": "https://linkedin.com/in/nadia-fofou",
+    "website_url": ""
   },
   {
     "name": "Mbollo Serge",
     "role": "Data Scientist",
     "interests": ["ML", "Data Engineering", "Civic Tech"],
-    "availability": "Workshops, Talks"
+    "availability": "Workshops, Talks",
+    "avatar_url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    "bio": "Data scientist leveraging machine learning and analytics to solve real-world problems, with special interest in civic technology.",
+    "github_url": "https://github.com/mbollo-serge",
+    "twitter_url": "https://twitter.com/mbollo_serge",
+    "linkedin_url": "https://linkedin.com/in/mbollo-serge",
+    "website_url": ""
   },
   {
-    "name":"Tomdieu Ivan",
-    "role":"Backend Developer",
-    "interests":["Django","APIs","Cloud"],
-    "availability":"Project Collaboration, Mentorship"
-  },
-  {
-    "name": "Joel Fah",
-    "role": "Pixel twister",
-    "interests": ["Communities", "Design", "Growth"],
-    "availability": "Design Reviews, Mentorship, Yapping"
+    "name": "Tomdieu Ivan",
+    "role": "Backend Developer",
+    "interests": ["Django", "APIs", "Cloud"],
+    "availability": "Project Collaboration, Mentorship",
+    "avatar_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+    "bio": "Backend developer specializing in scalable Django applications and cloud infrastructure, always eager to share knowledge.",
+    "github_url": "https://github.com/tomdieu-ivan",
+    "linkedin_url": "https://linkedin.com/in/tomdieu-ivan",
+    "website_url": "",
+    "twitter_url": ""
   }
 ]
