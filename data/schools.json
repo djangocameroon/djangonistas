@@ -28,5 +28,11 @@
     "city":"Yaounde",
     "programs":["Computer Science","Information Technology","Software Engineering"],
     "contact":"rectorat@uni-yaounde1.cm"
+  },
+  {
+    "name": "National Higher Polytechnic Institute(NAHPI)",
+    "city": "Bamenda",
+    "programs": ["Computer Science", "Software Engineering", "Information Technology", "Engineering"],
+    "contact": "info@uniba.cm"
   }
 ]
