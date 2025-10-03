@@ -1,0 +1,29 @@
+name: Check if PR author starred the repo
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-star:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if user starred repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USER: ${{ github.actor }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          echo "Checking if $USER starred $OWNER/$REPO"
+          curl -s -H "Authorization: token $GH_TOKEN" \
+            https://api.github.com/repos/$OWNER/$REPO/stargazers?per_page=100 \
+            | jq -r '.[].login' > stargazers.txt
+      
+          if grep -q "^$USER$" stargazers.txt; then
+            echo "User $USER has starred the repo 🎉"
+          else
+            echo "::error::User $USER has not starred the repo. Please star it before merging."
+            exit 1
+          fi
+
