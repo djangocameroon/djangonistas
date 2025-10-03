@@ -45,5 +45,17 @@
     "linkedin_url": "https://linkedin.com/in/tomdieu-ivan",
     "website_url": "",
     "twitter_url": ""
+  },
+  {
+    "name": "Mofiro Jean",
+    "role": "Community Lead",
+    "interests": ["Angular", "Full-Stack Development", "Open Source", "Community Building"],
+    "availability": "Mentorship, Speaking, Workshops",
+    "avatar_url": "https://pbs.twimg.com/profile_images/1974035183528456192/773Wwegb_400x400.jpg",
+    "bio": "Mofiro Jean is a passionate Angular developer and community organizer. He leads Angular Cameroon, focusing on building a collaborative platform for developers to learn, contribute, and showcase their projects.",
+    "github_url": "https://github.com/mofirojean",
+    "twitter_url": "https://x.com/mofirojean",
+    "linkedin_url": "https://linkedin.com/in/mofirojean",
+    "website_url": "https://#"
   }
 ]
