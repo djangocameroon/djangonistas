@@ -34,5 +34,11 @@
     "city": "Bamenda",
     "programs": ["Computer Science", "Software Engineering", "Information Technology", "Engineering"],
     "contact": "info@uniba.cm"
+  },
+  {
+    "name": "University of Douala",
+    "city": "Douala",
+    "programs": ["Computer Engineering", "Software Engineering", "Information Systems", "Cybersecurity"],
+    "contact": "infos.udla@univ-douala.com"
   }
 ]

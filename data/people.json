@@ -57,5 +57,17 @@
     "twitter_url": "https://x.com/mofirojean",
     "linkedin_url": "https://linkedin.com/in/mofirojean",
     "website_url": "https://#"
+  },
+  {
+    "name": "Neba Desmond",
+    "role": "Software Engineer",
+    "interests": ["AI", "IOT", "Backend Development", "Community Building", "Mentoring"],
+    "availability": "Mentorship, Speaking, Workshops",
+    "avatar_url": "https://pbs.twimg.com/profile_images/1974296767266013184/f-ny0LQC.jpg",
+    "bio": "Passionate about building impactful tech, teaching others, and growing African developer communities. Huge fan of IOT. Advocate for digital inclusion.",
+    "github_url": "https://github.com/nebadesmondc",
+    "twitter_url": "https://x.com/nebadesmondc",
+    "linkedin_url": "https://linkedin.com/in/nebadesmondc",
+    "website_url": "https://#"
   }
 ]
