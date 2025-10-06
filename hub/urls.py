@@ -12,4 +12,5 @@ urlpatterns = [
     path("communities/<slug:slug>/", views.community_detail, name="community-detail"),
     path("schools/", views.school_list, name="schools"),
     path("schools/<slug:slug>/", views.school_detail, name="school-detail"),
+    path("api/search/", views.search_api, name="search-api"),
 ]
