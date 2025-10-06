@@ -82,5 +82,21 @@
   "description": "GDG Bamenda fosters tech learning and collaboration through meetups, workshops, and global programs like DevFest. Everyone is welcome to join and learn!",
   "founded_year": 2014,
   "member_count": 924
+},
+{
+  "name": ".NET Cameroon",
+  "focus": "A group of .NET enthusiasts in Cameroon, promoting Microsoft technologies (.NET, C#, Azure), live-coding sessions, meetups, and open source projects.",
+  "location": "Douala, Cameroon",
+  "contact": "dotnetcameroon@outlook.com",
+  "links": {
+    "website": "https://dotnet.cm/",
+    "github": "https://github.com/dotnetcameroon",
+    "linkedin": "https://cm.linkedin.com/company/dotnetcameroon"
+  },
+  "logo_url": "https://dotnet.cm/favicon.png",
+  "description": ".NET Cameroon is a dynamic community of learners and professionals who organize meetups, live coding sessions, and conferences to share their knowledge about the Microsoft ecosystem.",
+  "founded_year": 2023,
+  "member_count": 600
 }
+
 ]
