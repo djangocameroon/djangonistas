@@ -68,5 +68,19 @@
     "description": "Angular Cameroon is a community for developers passionate about Angular. We organize meetups, workshops, and collaborative projects to help members learn, grow, and contribute to the Angular ecosystem.",
     "founded_year": 2024,
     "member_count": 250
-  }
+  },
+  {
+  "name": "GDG Bamenda",
+  "focus": "Google Developer Group for Bamenda, supporting local devs on Android, Web, Cloud, and open source projects",
+  "location": "Bamenda, Cameroon",
+  "contact": "bamendagdg@gmail.cm",
+  "links": {
+    "website": "https://gdg.community.dev/gdg-bamenda/",
+    "twitter": "https://x.com/GDGBamenda"
+  },
+  "logo_url": "https://pbs.twimg.com/profile_images/1599828980143734787/XSx9oG2H_400x400.jpg",
+  "description": "GDG Bamenda fosters tech learning and collaboration through meetups, workshops, and global programs like DevFest. Everyone is welcome to join and learn!",
+  "founded_year": 2014,
+  "member_count": 924
+}
 ]
