@@ -2,7 +2,9 @@
 
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
-from django.db.models import Q
+from django.db.models import Q, Count
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 
 from .models import Community, Person, School
 
@@ -11,10 +13,16 @@ PAGE_SIZE = 9
 
 def home(request):
     """Landing page introducing the initiative and highlighting navigation."""
+    # Get recent additions for featured section
+    recent_people = Person.objects.order_by('-created_at')[:3]
+    recent_communities = Community.objects.order_by('-created_at')[:3]
+    
     context = {
         "people_count": Person.objects.count(),
         "community_count": Community.objects.count(),
         "school_count": School.objects.count(),
+        "recent_people": recent_people,
+        "recent_communities": recent_communities,
     }
     return render(request, "hub/home.html", context)
 
@@ -33,18 +41,26 @@ def _filter_people(queryset, request):
     """Apply search and filter logic to people queryset."""
     search_query = request.GET.get('search', '').strip()
     role_filter = request.GET.get('role', '').strip()
-    location_filter = request.GET.get('location', '').strip()
+    interest_filter = request.GET.get('interest', '').strip()
+    availability_filter = request.GET.get('availability', '').strip()
     
     if search_query:
         queryset = queryset.filter(
             Q(name__icontains=search_query) |
             Q(bio__icontains=search_query) |
             Q(interests__icontains=search_query) |
-            Q(availability__icontains=search_query)
+            Q(availability__icontains=search_query) |
+            Q(role__icontains=search_query)
         )
     
     if role_filter:
         queryset = queryset.filter(role__icontains=role_filter)
+    
+    if interest_filter:
+        queryset = queryset.filter(interests__icontains=interest_filter)
+    
+    if availability_filter:
+        queryset = queryset.filter(availability__icontains=availability_filter)
     
     return queryset
 
@@ -95,14 +111,21 @@ def people_list(request):
     
     # Get filter options for dropdowns
     roles = Person.objects.values_list('role', flat=True).distinct().exclude(role='')
+    interests = []
+    for person in Person.objects.all():
+        interests.extend(person.interests or [])
+    interests = sorted(list(set(interests)))
     
     page_obj = _paginate(request, queryset)
     context = {
         "page_obj": page_obj, 
         "people": page_obj,
         "roles": sorted(roles),
+        "interests": interests,
         "current_search": request.GET.get('search', ''),
         "current_role": request.GET.get('role', ''),
+        "current_interest": request.GET.get('interest', ''),
+        "current_availability": request.GET.get('availability', ''),
     }
     return render(request, "hub/people.html", context)
 
@@ -171,3 +194,63 @@ def school_detail(request, slug):
     """Detail page for a school or innovation hub."""
     school = get_object_or_404(School, slug=slug)
     return render(request, "hub/school_detail.html", {"school": school})
+
+
+@require_http_methods(["GET"])
+def search_api(request):
+    """API endpoint for search suggestions."""
+    query = request.GET.get('q', '').strip()
+    if len(query) < 2:
+        return JsonResponse({'results': []})
+    
+    results = {
+        'people': [],
+        'communities': [],
+        'schools': []
+    }
+    
+    # Search people
+    people = Person.objects.filter(
+        Q(name__icontains=query) | 
+        Q(role__icontains=query) |
+        Q(bio__icontains=query)
+    )[:5]
+    
+    for person in people:
+        results['people'].append({
+            'name': person.name,
+            'role': person.role,
+            'url': person.get_absolute_url(),
+            'avatar': person.avatar_url or None
+        })
+    
+    # Search communities
+    communities = Community.objects.filter(
+        Q(name__icontains=query) | 
+        Q(focus__icontains=query) |
+        Q(location__icontains=query)
+    )[:5]
+    
+    for community in communities:
+        results['communities'].append({
+            'name': community.name,
+            'location': community.location,
+            'url': community.get_absolute_url(),
+            'logo': community.logo_url or None
+        })
+    
+    # Search schools
+    schools = School.objects.filter(
+        Q(name__icontains=query) | 
+        Q(city__icontains=query) |
+        Q(programs__icontains=query)
+    )[:5]
+    
+    for school in schools:
+        results['schools'].append({
+            'name': school.name,
+            'city': school.city,
+            'url': school.get_absolute_url()
+        })
+    
+    return JsonResponse(results)

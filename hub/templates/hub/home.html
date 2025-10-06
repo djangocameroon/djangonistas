@@ -29,6 +29,72 @@
   </div>
 </section>
 
+<!-- Featured Recent Additions -->
+{% if recent_people or recent_communities %}
+<section class="mt-16 space-y-8">
+  <div class="text-center">
+    <h2 class="text-2xl font-bold text-white mb-2">Recently Added</h2>
+    <p class="text-slate-300">Meet our newest community members and partners</p>
+  </div>
+  
+  {% if recent_people %}
+  <div>
+    <h3 class="text-lg font-semibold text-sky-200 mb-4">New People</h3>
+    <div class="grid gap-4 md:grid-cols-3">
+      {% for person in recent_people %}
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+        <div class="flex items-center gap-3">
+          {% if person.avatar_url %}
+          <img src="{{ person.avatar_url }}" alt="{{ person.name }}" class="h-12 w-12 rounded-full object-cover">
+          {% else %}
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-sky-500/20 text-lg font-bold text-sky-200">
+            {{ person.name|first|upper }}
+          </div>
+          {% endif %}
+          <div>
+            <h4 class="font-semibold text-white">{{ person.name }}</h4>
+            <p class="text-sm text-slate-300">{{ person.role }}</p>
+          </div>
+        </div>
+        <a href="{{ person.get_absolute_url }}" class="mt-3 inline-block text-sm text-sky-300 hover:text-sky-200">
+          View Profile →
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  
+  {% if recent_communities %}
+  <div>
+    <h3 class="text-lg font-semibold text-purple-200 mb-4">New Communities</h3>
+    <div class="grid gap-4 md:grid-cols-3">
+      {% for community in recent_communities %}
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+        <div class="flex items-center gap-3">
+          {% if community.logo_url %}
+          <img src="{{ community.logo_url }}" alt="{{ community.name }}" class="h-12 w-12 rounded-lg object-cover">
+          {% else %}
+          <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/20 text-lg font-bold text-purple-200">
+            {{ community.name|first|upper }}
+          </div>
+          {% endif %}
+          <div>
+            <h4 class="font-semibold text-white">{{ community.name }}</h4>
+            <p class="text-sm text-slate-300">{{ community.location }}</p>
+          </div>
+        </div>
+        <a href="{{ community.get_absolute_url }}" class="mt-3 inline-block text-sm text-purple-300 hover:text-purple-200">
+          Learn More →
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endif %}
+
 <section class="mt-16 grid gap-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur md:grid-cols-3">
   <div class="space-y-2">
     <p class="odometer text-5xl font-black text-sky-200">{{ people_count }}</p>

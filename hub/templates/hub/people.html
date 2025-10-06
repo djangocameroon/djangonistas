@@ -13,7 +13,7 @@
 <!-- Search and Filter Section -->
 <div class="mb-8 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
   <form method="get" data-live-search class="space-y-4">
-    <div class="grid gap-4 md:grid-cols-3">
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <!-- Search Input -->
       <div>
         <label for="search" class="block text-sm font-medium text-slate-300 mb-2">Search</label>
@@ -42,30 +42,64 @@
         </select>
       </div>
       
-      <!-- Search Button -->
-      <div class="flex items-end">
-        <button 
-          type="submit" 
-          class="w-full rounded-lg bg-sky-500 px-4 py-2 font-semibold text-white hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+      <!-- Interest Filter -->
+      <div>
+        <label for="interest" class="block text-sm font-medium text-slate-300 mb-2">Interest</label>
+        <select 
+          id="interest" 
+          name="interest" 
+          class="w-full rounded-lg border border-white/20 bg-slate-800 px-4 py-2 text-white focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20"
         >
-          Search
-        </button>
+          <option value="" class="bg-slate-800 text-white">All Interests</option>
+          {% for interest in interests %}
+          <option value="{{ interest }}" {% if interest == current_interest %}selected{% endif %} class="bg-slate-800 text-white">{{ interest }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <!-- Availability Filter -->
+      <div>
+        <label for="availability" class="block text-sm font-medium text-slate-300 mb-2">Availability</label>
+        <select 
+          id="availability" 
+          name="availability" 
+          class="w-full rounded-lg border border-white/20 bg-slate-800 px-4 py-2 text-white focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+        >
+          <option value="" class="bg-slate-800 text-white">All Availability</option>
+          <option value="Mentorship" {% if "Mentorship" in current_availability %}selected{% endif %} class="bg-slate-800 text-white">Mentorship</option>
+          <option value="Speaking" {% if "Speaking" in current_availability %}selected{% endif %} class="bg-slate-800 text-white">Speaking</option>
+          <option value="Workshops" {% if "Workshops" in current_availability %}selected{% endif %} class="bg-slate-800 text-white">Workshops</option>
+          <option value="Code Reviews" {% if "Code Reviews" in current_availability %}selected{% endif %} class="bg-slate-800 text-white">Code Reviews</option>
+          <option value="Pair Programming" {% if "Pair Programming" in current_availability %}selected{% endif %} class="bg-slate-800 text-white">Pair Programming</option>
+        </select>
       </div>
     </div>
     
-    {% if current_search or current_role %}
+    <!-- Filter Actions -->
     <div class="flex items-center justify-between border-t border-white/10 pt-4">
+      <div class="flex items-center gap-4">
+        <button 
+          type="submit" 
+          class="rounded-lg bg-sky-500 px-6 py-2 font-semibold text-white hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400/20"
+        >
+          Apply Filters
+        </button>
+        {% if current_search or current_role or current_interest or current_availability %}
+        <a 
+          href="{% url 'hub:people' %}" 
+          class="rounded-lg bg-slate-600 px-6 py-2 font-semibold text-white hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400/20"
+        >
+          Clear All
+        </a>
+        {% endif %}
+      </div>
+      
+      {% if current_search or current_role or current_interest or current_availability %}
       <p class="text-sm text-slate-400">
         Found {{ page_obj.paginator.count }} result{{ page_obj.paginator.count|pluralize }}
       </p>
-      <a 
-        href="{% url 'hub:people' %}" 
-        class="text-sm text-sky-300 hover:text-sky-200"
-      >
-        Clear filters
-      </a>
+      {% endif %}
     </div>
-    {% endif %}
   </form>
 </div>
 
