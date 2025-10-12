@@ -200,14 +200,14 @@ def school_detail(request, slug):
 def search_api(request):
     """API endpoint for search suggestions."""
     query = request.GET.get('q', '').strip()
-    if len(query) < 2:
-        return JsonResponse({'results': []})
-    
     results = {
         'people': [],
         'communities': [],
         'schools': []
     }
+
+    if len(query) < 2:
+        return JsonResponse(results)
     
     # Search people
     people = Person.objects.filter(
