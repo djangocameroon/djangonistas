@@ -99,6 +99,12 @@
 
     <script>
       // Live search functionality
+      function highlightTerm(text, term) {
+        if (!term) return text;
+        const re = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+        return text.replace(re, '<mark class="bg-yellow-300/40 text-yellow-900">$1</mark>');
+      }
+
       document.addEventListener('DOMContentLoaded', function() {
         const searchForms = document.querySelectorAll('form[data-live-search]');
         
@@ -163,8 +169,8 @@
                         <a href="${person.url}" class="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg">
                           ${person.avatar ? `<img src="${person.avatar}" alt="${person.name}" class="w-8 h-8 rounded-full object-cover">` : `<div class="w-8 h-8 rounded-full bg-sky-500/20 flex items-center justify-center text-sm font-bold text-sky-200">${person.name[0]}</div>`}
                           <div>
-                            <div class="text-white font-medium">${person.name}</div>
-                            <div class="text-sm text-slate-400">${person.role}</div>
+                            <div class="text-white font-medium">${highlightTerm(person.name, query)}</div>
+                            <div class="text-sm text-slate-400">${highlightTerm(person.role, query)}</div>
                           </div>
                         </a>
                       `;
@@ -179,8 +185,8 @@
                         <a href="${community.url}" class="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg">
                           ${community.logo ? `<img src="${community.logo}" alt="${community.name}" class="w-8 h-8 rounded-lg object-cover">` : `<div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-sm font-bold text-purple-200">${community.name[0]}</div>`}
                           <div>
-                            <div class="text-white font-medium">${community.name}</div>
-                            <div class="text-sm text-slate-400">${community.location || ''}</div>
+                            <div class="text-white font-medium">${highlightTerm(community.name, query)}</div>
+                            <div class="text-sm text-slate-400">${highlightTerm(community.location || '', query)}</div>
                           </div>
                         </a>
                       `;
@@ -195,8 +201,8 @@
                         <a href="${school.url}" class="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg">
                           <div class="w-8 h-8 rounded-lg bg-teal-500/20 flex items-center justify-center text-sm font-bold text-teal-200">${school.name[0]}</div>
                           <div>
-                            <div class="text-white font-medium">${school.name}</div>
-                            <div class="text-sm text-slate-400">${school.city || ''}</div>
+                            <div class="text-white font-medium">${highlightTerm(school.name, query)}</div>
+                            <div class="text-sm text-slate-400">${highlightTerm(school.city || '', query)}</div>
                           </div>
                         </a>
                       `;
@@ -209,6 +215,9 @@
                   }
 
                   searchContent.innerHTML = html;
+                  // Re-apply highlight for dynamic HTML
+                  const marks = searchContent.querySelectorAll('mark');
+                  marks.forEach(m => m.classList.add('rounded', 'px-1'));
                 })
                 .catch(error => {
                   searchLoading.classList.add('hidden');

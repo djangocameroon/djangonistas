@@ -3,6 +3,17 @@
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q, Count
+from django.db.models.functions import Greatest
+from django.conf import settings
+from django.db import connection
+try:
+    from django.contrib.postgres.search import TrigramSimilarity
+    HAS_TRIGRAM = True
+except ImportError:
+    HAS_TRIGRAM = False
+
+def is_postgres():
+    return connection.vendor == 'postgresql'
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 
@@ -45,13 +56,23 @@ def _filter_people(queryset, request):
     availability_filter = request.GET.get('availability', '').strip()
     
     if search_query:
-        queryset = queryset.filter(
-            Q(name__icontains=search_query) |
-            Q(bio__icontains=search_query) |
-            Q(interests__icontains=search_query) |
-            Q(availability__icontains=search_query) |
-            Q(role__icontains=search_query)
-        )
+        if HAS_TRIGRAM and is_postgres():
+            queryset = queryset.annotate(
+                similarity=Greatest(
+                    TrigramSimilarity('name', search_query),
+                    TrigramSimilarity('bio', search_query),
+                    TrigramSimilarity('role', search_query),
+                    TrigramSimilarity('availability', search_query),
+                )
+            ).filter(similarity__gt=0.2).order_by('-similarity')
+        else:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) |
+                Q(bio__icontains=search_query) |
+                Q(interests__icontains=search_query) |
+                Q(availability__icontains=search_query) |
+                Q(role__icontains=search_query)
+            )
     
     if role_filter:
         queryset = queryset.filter(role__icontains=role_filter)
@@ -72,11 +93,22 @@ def _filter_communities(queryset, request):
     focus_filter = request.GET.get('focus', '').strip()
     
     if search_query:
-        queryset = queryset.filter(
-            Q(name__icontains=search_query) |
-            Q(description__icontains=search_query) |
-            Q(focus__icontains=search_query)
-        )
+        if HAS_TRIGRAM and is_postgres():
+            queryset = queryset.annotate(
+                similarity=Greatest(
+                    TrigramSimilarity('name', search_query),
+                    TrigramSimilarity('description', search_query),
+                    TrigramSimilarity('focus', search_query),
+                    TrigramSimilarity('location', search_query),
+                )
+            ).filter(similarity__gt=0.2).order_by('-similarity')
+        else:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) |
+                Q(description__icontains=search_query) |
+                Q(focus__icontains=search_query) |
+                Q(location__icontains=search_query)
+            )
     
     if location_filter:
         queryset = queryset.filter(location__icontains=location_filter)
@@ -93,10 +125,19 @@ def _filter_schools(queryset, request):
     city_filter = request.GET.get('city', '').strip()
     
     if search_query:
-        queryset = queryset.filter(
-            Q(name__icontains=search_query) |
-            Q(programs__icontains=search_query)
-        )
+        if HAS_TRIGRAM and is_postgres():
+            queryset = queryset.annotate(
+                similarity=Greatest(
+                    TrigramSimilarity('name', search_query),
+                    TrigramSimilarity('city', search_query),
+                )
+            ).filter(similarity__gt=0.2).order_by('-similarity')
+        else:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) |
+                Q(programs__icontains=search_query) |
+                Q(city__icontains=search_query)
+            )
     
     if city_filter:
         queryset = queryset.filter(city__icontains=city_filter)
@@ -210,12 +251,23 @@ def search_api(request):
         return JsonResponse(results)
     
     # Search people
-    people = Person.objects.filter(
-        Q(name__icontains=query) | 
-        Q(role__icontains=query) |
-        Q(bio__icontains=query)
-    )[:5]
-    
+    if HAS_TRIGRAM and query and is_postgres():
+        people = Person.objects.annotate(
+            similarity=Greatest(
+                TrigramSimilarity('name', query),
+                TrigramSimilarity('role', query),
+                TrigramSimilarity('bio', query),
+                TrigramSimilarity('availability', query),
+            )
+        ).filter(similarity__gt=0.2).order_by('-similarity')[:5]
+    else:
+        people = Person.objects.filter(
+            Q(name__icontains=query) | 
+            Q(role__icontains=query) |
+            Q(bio__icontains=query) |
+            Q(availability__icontains=query)
+        )[:5]
+
     for person in people:
         results['people'].append({
             'name': person.name,
@@ -223,14 +275,25 @@ def search_api(request):
             'url': person.get_absolute_url(),
             'avatar': person.avatar_url or None
         })
-    
+
     # Search communities
-    communities = Community.objects.filter(
-        Q(name__icontains=query) | 
-        Q(focus__icontains=query) |
-        Q(location__icontains=query)
-    )[:5]
-    
+    if HAS_TRIGRAM and query and is_postgres():
+        communities = Community.objects.annotate(
+            similarity=Greatest(
+                TrigramSimilarity('name', query),
+                TrigramSimilarity('focus', query),
+                TrigramSimilarity('location', query),
+                TrigramSimilarity('description', query),
+            )
+        ).filter(similarity__gt=0.2).order_by('-similarity')[:5]
+    else:
+        communities = Community.objects.filter(
+            Q(name__icontains=query) | 
+            Q(focus__icontains=query) |
+            Q(location__icontains=query) |
+            Q(description__icontains=query)
+        )[:5]
+
     for community in communities:
         results['communities'].append({
             'name': community.name,
@@ -238,19 +301,27 @@ def search_api(request):
             'url': community.get_absolute_url(),
             'logo': community.logo_url or None
         })
-    
+
     # Search schools
-    schools = School.objects.filter(
-        Q(name__icontains=query) | 
-        Q(city__icontains=query) |
-        Q(programs__icontains=query)
-    )[:5]
-    
+    if HAS_TRIGRAM and query and is_postgres():
+        schools = School.objects.annotate(
+            similarity=Greatest(
+                TrigramSimilarity('name', query),
+                TrigramSimilarity('city', query),
+            )
+        ).filter(similarity__gt=0.2).order_by('-similarity')[:5]
+    else:
+        schools = School.objects.filter(
+            Q(name__icontains=query) | 
+            Q(city__icontains=query) |
+            Q(programs__icontains=query)
+        )[:5]
+
     for school in schools:
         results['schools'].append({
             'name': school.name,
             'city': school.city,
             'url': school.get_absolute_url()
         })
-    
+
     return JsonResponse(results)
