@@ -13,7 +13,7 @@ from django.utils.html import format_html
 class SluggedModel(models.Model):
     """Abstract base model adding a unique slug derived from the name."""
 
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=160, unique=True, editable=False, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
