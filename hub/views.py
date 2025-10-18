@@ -246,6 +246,7 @@ def search_api(request):
         'communities': [],
         'schools': []
     }
+
     if len(query) < 2:
         return JsonResponse(results)
     
