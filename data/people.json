@@ -95,6 +95,19 @@
     "linkedin_url": "https://www.linkedin.com/in/joelfah",
     "instagram_url": "https://www.instagram.com/FAHJOEL",
     "website_url": "https://dejonfahjoel.web.app/#/preloader"
+  },
+  {
+    "name": "Charles Kamga",
+    "role": "Security Analyse",
+    "interests": ["Cybersecurity", "Fashion Tech", "Web Development", "Community Building"],
+    "availability": "Mentorship, Project collaboration, Workshops",
+    "avatar_url": "https://avatars.githubusercontent.com/u/206536323?v=4",
+    "bio": "Étudiant en informatique | Passionné par la cybersécurité et le développement web | En quête d’opportunités pour apprendre, créer et partager",
+    "github_url": "https://github.com/charles-kamga",
+    "twitter_url": "https:#",
+    "linkedin_url": "https://www.linkedin.com/in/charles-kamga/",
+    "instagram_url": "https:#",
+    "website_url": "https:#"
   }
   
 ]
