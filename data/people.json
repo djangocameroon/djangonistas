@@ -84,6 +84,18 @@
     "website_url": "https://#"
   },
   {
+    "name": "Marc Wogue",
+    "role": "Front end Developer",
+    "interests": ["Django", "Python", "Web Development", "Open Source","Tailwind CSS","react", "Next.js"],
+    "availability": "Project Collaboration, code review",
+    "avatar_url": "https://avatars.githubusercontent.com/u/106169571?v=4",
+    "bio": "I am a passionate front-end developer with a strong focus on creating beautiful and functional user interfaces. I am skilled in Django, Python, and modern web technologies, and is dedicated to building accessible and engaging digital experiences.",
+    "github_url": "https://github.com/marcwogue",
+    "twitter_url": "https://#",
+    "linkedin_url": "www.linkedin.com/in/jean-marc-wogue-deffo-562756383",
+    "website_url": "https://portfoliocreed.vercel.app/"
+  },
+  {
     "name": "Joel-Fah",
     "role": "Fullstack Software Developer",
     "interests": ["Tech Entrepreneurship", "Fashion Tech", "Fullstack Development", "Community Building"],
