@@ -1,4 +1,5 @@
 {% extends "hub/base.html" %}
+{% load search_extras %}
 
 {% block title %}Djangonista · People{% endblock %}
 
@@ -120,11 +121,29 @@
       {% endif %}
       <div class="flex-1">
         <h2 class="text-xl font-semibold text-white">
-          <a class="hover:underline" href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+          <a class="hover:underline" href="{{ person.get_absolute_url }}">
+            {% if current_search %}
+              {{ person.name|highlight_search:current_search }}
+            {% else %}
+              {{ person.name }}
+            {% endif %}
+          </a>
         </h2>
-        <p class="text-sm uppercase tracking-wide text-slate-300">{{ person.role }}</p>
+        <p class="text-sm uppercase tracking-wide text-slate-300">
+          {% if current_search %}
+            {{ person.role|highlight_search:current_search }}
+          {% else %}
+            {{ person.role }}
+          {% endif %}
+        </p>
         {% if person.bio %}
-        <p class="mt-2 text-sm text-slate-400 line-clamp-2">{{ person.bio|truncatewords:15 }}</p>
+        <p class="mt-2 text-sm text-slate-400 line-clamp-2">
+          {% if current_search %}
+            {{ person.bio|highlight_search:current_search|truncatewords:15 }}
+          {% else %}
+            {{ person.bio|truncatewords:15 }}
+          {% endif %}
+        </p>
         {% endif %}
       </div>
     </div>
@@ -133,14 +152,26 @@
       <h3 class="text-sm font-semibold text-slate-200">Interests</h3>
       <ul class="mt-2 flex flex-wrap gap-2 text-xs">
         {% for tag in person.interests %}
-        <li class="rounded-full bg-sky-500/20 px-3 py-1 text-sky-200">{{ tag }}</li>
+        <li class="rounded-full bg-sky-500/20 px-3 py-1 text-sky-200">
+          {% if current_search %}
+            {{ tag|highlight_search:current_search }}
+          {% else %}
+            {{ tag }}
+          {% endif %}
+        </li>
         {% endfor %}
       </ul>
     </div>
     {% endif %}
     {% if person.availability %}
     <p class="mt-4 text-sm text-slate-300">
-      Available for <span class="font-semibold text-slate-100">{{ person.availability }}</span>
+      Available for <span class="font-semibold text-slate-100">
+        {% if current_search %}
+          {{ person.availability|highlight_search:current_search }}
+        {% else %}
+          {{ person.availability }}
+        {% endif %}
+      </span>
     </p>
     {% endif %}
   </article>
