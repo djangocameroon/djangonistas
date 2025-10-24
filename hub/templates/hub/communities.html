@@ -1,4 +1,5 @@
 {% extends "hub/base.html" %}
+{% load search_extras %}
 
 {% block title %}Djangonista · Communities{% endblock %}
 
@@ -86,10 +87,22 @@
       {% endif %}
       <div class="flex-1">
         <h2 class="text-xl font-semibold text-white">
-          <a class="hover:underline" href="{{ community.get_absolute_url }}">{{ community.name }}</a>
+          <a class="hover:underline" href="{{ community.get_absolute_url }}">
+            {% if current_search %}
+              {{ community.name|highlight_search:current_search }}
+            {% else %}
+              {{ community.name }}
+            {% endif %}
+          </a>
         </h2>
         {% if community.location %}
-        <p class="text-sm text-slate-300">📍 {{ community.location }}</p>
+        <p class="text-sm text-slate-300">📍 
+          {% if current_search %}
+            {{ community.location|highlight_search:current_search }}
+          {% else %}
+            {{ community.location }}
+          {% endif %}
+        </p>
         {% endif %}
         {% if community.member_count %}
         <p class="text-xs text-slate-400">{{ community.member_count }} members</p>
@@ -97,7 +110,13 @@
       </div>
     </div>
     {% if community.focus %}
-    <p class="text-sm text-slate-200">{{ community.focus }}</p>
+    <p class="text-sm text-slate-200">
+      {% if current_search %}
+        {{ community.focus|highlight_search:current_search }}
+      {% else %}
+        {{ community.focus }}
+      {% endif %}
+    </p>
     {% endif %}
     <div class="mt-auto space-y-2 text-sm text-slate-300">
       {% if community.contact %}

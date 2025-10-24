@@ -1,4 +1,5 @@
 {% extends "hub/base.html" %}
+{% load search_extras %}
 
 {% block title %}Djangonista · Schools{% endblock %}
 
@@ -14,17 +15,35 @@
   {% for school in schools %}
   <article class="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
     <h2 class="text-xl font-semibold text-white">
-      <a class="hover:underline" href="{{ school.get_absolute_url }}">{{ school.name }}</a>
+      <a class="hover:underline" href="{{ school.get_absolute_url }}">
+        {% if current_search %}
+          {{ school.name|highlight_search:current_search }}
+        {% else %}
+          {{ school.name }}
+        {% endif %}
+      </a>
     </h2>
     {% if school.city %}
-    <p class="text-sm text-slate-300">{{ school.city }}</p>
+    <p class="text-sm text-slate-300">
+      {% if current_search %}
+        {{ school.city|highlight_search:current_search }}
+      {% else %}
+        {{ school.city }}
+      {% endif %}
+    </p>
     {% endif %}
     {% if school.programs %}
     <div class="mt-3">
       <h3 class="text-sm font-semibold text-slate-200">Programs</h3>
       <ul class="mt-2 flex flex-wrap gap-2 text-xs">
         {% for program in school.programs %}
-        <li class="rounded-full bg-teal-500/20 px-3 py-1 text-teal-100">{{ program }}</li>
+        <li class="rounded-full bg-teal-500/20 px-3 py-1 text-teal-100">
+          {% if current_search %}
+            {{ program|highlight_search:current_search }}
+          {% else %}
+            {{ program }}
+          {% endif %}
+        </li>
         {% endfor %}
       </ul>
     </div>
